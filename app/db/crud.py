@@ -11,6 +11,9 @@ def create_category(db: Session, title: str):
 def get_category_by_title(db: Session, title: str):
     return db.query(models.Category).filter(models.Category.title == title).first()
 
+def get_category(db: Session, category_id: int):
+    return db.query(models.Category).filter(models.Category.id == category_id).first()
+
 def get_categories(db: Session):
     return db.query(models.Category).all()
 
@@ -33,3 +36,15 @@ def create_book(db: Session, title: str, description: str, price: float, categor
 
 def get_books(db: Session):
     return db.query(models.Book).all()
+def get_book(db: Session, book_id: int):
+    return db.query(models.Book).filter(models.Book.id == book_id).first()
+
+def get_books_by_category(db: Session, category_id: int):
+    return db.query(models.Book).filter(models.Book.category_id == category_id).all()
+
+def delete_book(db: Session, book_id: int):
+    db_book = db.query(models.Book).filter(models.Book.id == book_id).first()
+    if db_book:
+        db.delete(db_book)
+        db.commit()
+    return db_book
