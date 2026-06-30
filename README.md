@@ -1,17 +1,24 @@
 # Book API
 
-Простое API для управления книгами и категориями
+API для управления книгами и категориями.  
+Проект написан на FastAPI с использованием PostgreSQL и SQLAlchemy.  
+Реализованы все CRUD-операции для книг и категорий, а также фильтрация книг по категориям.
 
-## Запуск
+## Запуск проекта
 
-source venv/bin/activate - активировать виртуальное окружение
-uvicorn app.main:app --reload - запустить сервер 
+Активируйте виртуальное окружение: source venv/bin/activate
 
-## Требования
+Установите зависимости: pip install -r requirements.txt
 
-- Python 3.8+
-- PostgreSQL (установленный в WSL)
-- Установленные зависимости из 'requirements.txt'
+Убедитесь, что PostgreSQL запущен: sudo service postgresql start
 
-## Подробнее о запуске
-Убедиться, что PostgreSQL запущен: sudo service postgresql start
+Заполните базу тестовыми данными: python3 app/init_db.py
+
+Запустите сервер: uvicorn app.main:app --reload
+
+Откройте Swagger в браузере: http://127.0.0.1:8000/docs
+
+## Что делает API
+
+Категории: создание, просмотр, обновление, удаление
+Книги: создание, просмотр, обновление, удаление, фильтрация по категории
