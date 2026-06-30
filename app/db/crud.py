@@ -48,3 +48,38 @@ def delete_book(db: Session, book_id: int):
         db.delete(db_book)
         db.commit()
     return db_book
+
+#для обновления категорий
+def update_category(db: Session, category_id: int, title: str):
+    db_category = db.query(models.Category).filter(models.Category.id == category_id).first()
+    if db_category:
+        db_category.title = title
+        db.commit()
+        db.refresh(db_category)
+    return db_category
+
+
+#для обновления книг
+def update_book(db: Session, book_id: int, title: str = None, description: str = None, price: float = None, category_id: int = None):
+    db_book = db.query(models.Book).filter(models.Book.id == book_id).first()
+    if db_book:
+        if title is not None:
+            db_book.title = title
+        if description is not None:
+            db_book.description = description
+        if price is not None:
+            db_book.price = price
+        if category_id is not None:
+            category = db.query(models.Category).filter(models.Category.id == category_id).first()
+            if category:
+                db_book.category_id = category_id
+        db.commit()
+        db.refresh(db_book)
+    return db_book
+
+def delete_category(db: Session, category_id: int):
+    db_category = db.query(models.Category).filter(models.Category.id == category_id).first()
+    if db_category:
+        db.delete(db_category)
+        db.commit()
+    return db_category

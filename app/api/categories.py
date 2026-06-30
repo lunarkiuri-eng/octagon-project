@@ -40,11 +40,8 @@ def update_category(category_id: int, category: CategoryUpdate, db: Session = De
         existing = crud.get_category_by_title(db, category.title)
         if existing and existing.id != category_id:
             raise HTTPException(status_code=400, detail="Категория с таким названием уже существует")
-        db_category.title = category.title
-        db.commit()
-        db.refresh(db_category)
     
-    return db_category
+    return crud.update_category(db, category_id, category.title)
 
 
 @router.delete("/{category_id}", status_code=204)

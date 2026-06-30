@@ -56,20 +56,14 @@ def update_book(book_id: int, book: BookUpdate, db: Session = Depends(get_db)):
         if not category:
             raise HTTPException(status_code=404, detail="Категория не найдена")
 
-    if book.title is not None:
-        db_book.title = book.title
-    if book.description is not None:
-        db_book.description = book.description
-    if book.price is not None:
-        db_book.price = book.price
-    if book.url is not None:
-        db_book.url = book.url
-    if book.category_id is not None:
-        db_book.category_id = book.category_id
-
-    db.commit()
-    db.refresh(db_book)
-    return db_book
+    return crud.update_book(
+        db, 
+        book_id, 
+        book.title, 
+        book.description, 
+        book.price, 
+        book.category_id
+    )
 
 
 @router.delete("/{book_id}", status_code=204)
